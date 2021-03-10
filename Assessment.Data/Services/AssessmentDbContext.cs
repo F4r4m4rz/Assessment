@@ -13,8 +13,8 @@ namespace Assessment.Data.Services
         {
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<ShoppingCard> ShoppingCards { get; set; }
     }
 }

@@ -13,6 +13,9 @@ namespace Assessment.Data.Model
         }
 
         public int Id { get; set; }
+
+        [ForeignKey(nameof(Item))]
+        public int ProductId { get; set; }
         public Product Item { get; set; }
         public int Count { get; set; }
 

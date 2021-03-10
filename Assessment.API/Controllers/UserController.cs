@@ -46,7 +46,8 @@ namespace Assessment.API.Controllers
                 {
                     Email = $"{role}@assessment.no",
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    UserName = $"{role}@assessment.no"
+                    UserName = $"{role}@assessment.no",
+                    Id = role
                 };
                 var result = userManager.CreateAsync(user, $"{role}1234!").Result;
 

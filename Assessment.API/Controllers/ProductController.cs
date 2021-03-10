@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Assessment.API.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
@@ -53,7 +53,7 @@ namespace Assessment.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = UserRole.Admin)]
+        //[Authorize(Roles = UserRole.Admin)]
         public IActionResult Add([FromBody] Product product)
         {
             if (!ModelState.IsValid)

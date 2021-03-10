@@ -49,6 +49,10 @@ namespace Assessment.API
             services.Add(new ServiceDescriptor(typeof(INewsRepository),
                                               typeof(NewsRepository),
                                               ServiceLifetime.Scoped));
+
+            services.Add(new ServiceDescriptor(typeof(IShoppingCardRepository),
+                                              typeof(ShoppingCardRepository),
+                                              ServiceLifetime.Scoped));
             #endregion
 
             // For Identity  

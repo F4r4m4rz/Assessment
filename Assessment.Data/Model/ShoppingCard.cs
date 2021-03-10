@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Assessment.Data.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace Assessment.Data.Model
 {
+    public enum ShoppingCardStatusEnum { Active, Closed }
+
     public class ShoppingCard
     {
         public ShoppingCard()
@@ -15,15 +19,27 @@ namespace Assessment.Data.Model
             Entries.CollectionChanged += Entries_CollectionChanged;
         }
 
-        public ShoppingCard(User user) : this()
+        public ShoppingCard(string userId) : this()
+        {
+            UserId = userId;
+        }
+
+        public ShoppingCard(User user) : this(user?.Id ?? throw new ArgumentNullException(nameof(user)))
         {
             User = user;
         }
 
         public int Id { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; }
         public ObservableCollection<ShoppingCardEntry> Entries { get; set; }
         public double TotalPrice { get; set; }
+        public ShoppingCardStatusEnum Status { get; set; } = ShoppingCardStatusEnum.Active;
         public User User { get; set; }
+
+        [NotMapped]
+        public bool IsActive { get; set; }
 
         public void AddEntry(ShoppingCardEntry entry)
         {
@@ -35,6 +51,13 @@ namespace Assessment.Data.Model
             Entries.Remove(entry);
         }
 
+        public void RemoveEntry(int entryId)
+        {
+            var entry = Entries.FirstOrDefault(a => a.Id == entryId)
+                ?? throw new EntryNotFoundException($"No entry found in the card by id: {entryId}");
+            Entries.Remove(entry);
+        }
+
         private void Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             TotalPrice = 0;
@@ -42,6 +65,12 @@ namespace Assessment.Data.Model
             {
                 TotalPrice += Entries[i].TotalPrice;
             }
+        }
+
+        internal ShoppingCard CheckOut()
+        {
+            Status = ShoppingCardStatusEnum.Closed;
+            return this;
         }
     }
 }

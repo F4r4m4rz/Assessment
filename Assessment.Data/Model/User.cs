@@ -11,5 +11,7 @@ namespace Assessment.Data.Model
         {
 
         }
+
+        public ICollection<ShoppingCard> ShoppingCards { get; set; }
     }
 }
