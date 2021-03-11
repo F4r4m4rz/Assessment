@@ -53,32 +53,38 @@ namespace Assessment.API
             services.Add(new ServiceDescriptor(typeof(IShoppingCardRepository),
                                               typeof(ShoppingCardRepository),
                                               ServiceLifetime.Scoped));
+
+            services.Add(new ServiceDescriptor(typeof(IUserRepository),
+                                              typeof(UserRepository),
+                                              ServiceLifetime.Scoped));
             #endregion
 
-            // For Identity  
+            #region Identity & Authentication
+            
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AssessmentDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Adding Authentication  
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
-              {
-                  options.SaveToken = true;
-                  options.RequireHttpsMetadata = false;
-                  options.TokenValidationParameters = new TokenValidationParameters()
-                  {
-                      ValidateIssuer = true,
-                      ValidateAudience = true,
-                      ValidAudience = Configuration["JWT:ValidAudience"],
-                      ValidIssuer = Configuration["JWT:ValidIssuer"],
-                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
-                  };
-              });
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

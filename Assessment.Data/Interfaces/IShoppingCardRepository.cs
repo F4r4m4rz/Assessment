@@ -15,5 +15,6 @@ namespace Assessment.Data.Interfaces
         Task RemoveFromActiveShoppingCard(int cardId, int entryId);
         Task<ShoppingCard> CheckOutShoppingCard(int cardId);
         Task<ShoppingCard> CheckOutShoppingCard(string userId);
+        Task<IEnumerable<ShoppingCard>> ShoppingCardHistory(string userId);
     }
 }

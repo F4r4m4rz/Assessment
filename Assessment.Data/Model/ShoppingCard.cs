@@ -1,4 +1,5 @@
 ﻿using Assessment.Data.Exceptions;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +40,7 @@ namespace Assessment.Data.Model
         public User User { get; set; }
 
         [NotMapped]
-        public bool IsActive { get; set; }
+        public bool IsActive => Status == ShoppingCardStatusEnum.Active;
 
         public void AddEntry(ShoppingCardEntry entry)
         {

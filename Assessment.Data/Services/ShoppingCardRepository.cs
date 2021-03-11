@@ -13,10 +13,12 @@ namespace Assessment.Data.Services
     public class ShoppingCardRepository : IShoppingCardRepository
     {
         private readonly AssessmentDbContext db;
+        private readonly IUserRepository userRepository;
 
-        public ShoppingCardRepository(AssessmentDbContext db)
+        public ShoppingCardRepository(AssessmentDbContext db, IUserRepository userRepository)
         {
             this.db = db;
+            this.userRepository = userRepository;
         }
 
         public async Task AddToActiveShoppingCard(string userId, ShoppingCardEntry entry)
@@ -58,8 +60,9 @@ namespace Assessment.Data.Services
 
         public async Task<ShoppingCard> GetActiveShoppingCard(string userId)
         {
-            var user = (await this.db.Users.Include(user => (user as User).ShoppingCards)
-                                           .FirstOrDefaultAsync(user => user.Id == userId)) as User;
+            var user = (await this.userRepository.GetUser(userId))
+                ?? throw new EntryNotFoundException($"User could not be found with id: {userId}");
+
             return user.ShoppingCards.FirstOrDefault(card => card.IsActive);
         }
 
@@ -86,6 +89,14 @@ namespace Assessment.Data.Services
             var card = await GetShoppingCard(cardId)
                 ?? throw new EntryNotFoundException($"Card doesn't exist. Id: {cardId}");
             await RemoveEntry(entryId, card);
+        }
+
+        public async Task<IEnumerable<ShoppingCard>> ShoppingCardHistory(string userId)
+        {
+            var user = (await this.userRepository.GetUser(userId))
+                ?? throw new EntryNotFoundException($"User could not be found with id: {userId}");
+
+            return user.ShoppingCards;
         }
     }
 }
