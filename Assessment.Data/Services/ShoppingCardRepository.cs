@@ -69,7 +69,9 @@ namespace Assessment.Data.Services
 
         public async Task<ShoppingCard> GetShoppingCard(int cardId)
         {
-            return await db.ShoppingCards.FindAsync(cardId);
+            return await db.ShoppingCards.Include(card => card.Entries)
+                                         .ThenInclude(entry => entry.Item)
+                .FirstOrDefaultAsync(card => card.Id == cardId);
         }
 
         public async Task RemoveFromActiveShoppingCard(string userId, int entryId)

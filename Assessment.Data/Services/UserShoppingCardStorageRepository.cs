@@ -21,6 +21,8 @@ namespace Assessment.Data.Services
         public async Task<UserShoppingCardStorage> GetUserShoppingCardStorage(string userId)
         {
             var shoppingCardStorage = (await this.db.UserShoppingCardStorages.Include(user => user.ShoppingCards)
+                                                                             .ThenInclude(card => card.Entries)
+                                                                             .ThenInclude(entry => entry.Item)
                          .FirstOrDefaultAsync(storage => storage.Id == userId));
 
             if (shoppingCardStorage == default(UserShoppingCardStorage))

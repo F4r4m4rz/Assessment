@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Assessment.Data.Model;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading;
+using MySql.Data.MySqlClient;
 
 namespace Assessment.API
 {
@@ -33,16 +35,14 @@ namespace Assessment.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            WaitForDBInit(Configuration["ConnectionStrings:AssessmentDbContext"]);
             services.AddControllers();
 
             // Add DbContext
             services.AddCors();
             services.AddDbContext<AssessmentDbContext>(builder =>
             {
-                builder.UseMySql(Configuration["ConnectionStrings:AssessmentDbContext"], opt => 
-                {
-                    opt.CommandTimeout(300);
-                });
+                builder.UseMySql(Configuration["ConnectionStrings:AssessmentDbContext"]);
             });
 
             #region Add repositories
@@ -64,7 +64,7 @@ namespace Assessment.API
             #endregion
 
             #region Identity & Authentication
-            
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AssessmentDbContext>()
                 .AddDefaultTokenProviders();
@@ -107,12 +107,33 @@ namespace Assessment.API
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void WaitForDBInit(string connectionString)
+        {
+            var connection = new MySqlConnection(connectionString);
+            int retries = 1;
+            while (retries < 7)
+            {
+                try
+                {
+                    Console.WriteLine("Connecting to db. Trial: {0}", retries);
+                    connection.Open();
+                    connection.Close();
+                    break;
+                }
+                catch (MySqlException)
+                {
+                    Thread.Sleep((int)Math.Pow(2, retries) * 1000);
+                    retries++;
+                }
+            }
         }
     }
 }

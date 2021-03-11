@@ -207,7 +207,6 @@ namespace Assessment.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: true),
-                    TotalPrice = table.Column<double>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     UserShoppingCardStorageId = table.Column<string>(nullable: true)
                 },

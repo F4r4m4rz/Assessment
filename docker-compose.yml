@@ -1,8 +1,8 @@
 version: '3.1'
 services:
   webapp:
-    container_name: assessment.api1
-    image: webapp.api:1
+    container_name: assessment.api
+    image: webapp.api
     build:
       context: ./
       dockerfile: ./app.dockerfile
@@ -11,21 +11,21 @@ services:
     ports:
       - "5000:7909"
     volumes:
-      - appbuild4:/app
+      - appbuild:/app
     depends_on:
       - builder
       - mysql
   
   builder:
-    container_name: assessment.builder1
-    image: webapp.build:1
+    container_name: assessment.builder
+    image: webapp.build
     build:
       context: ./
       dockerfile: ./build.dockerfile
       args:
         BUILD_CONFIG: Debug
     volumes:
-      - appbuild4:/app
+      - appbuild:/app
     depends_on:
       - mysql
 
@@ -43,4 +43,4 @@ services:
     - '3306:3306'
 
 volumes:
-  appbuild4:
+  appbuild:

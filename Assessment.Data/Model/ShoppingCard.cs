@@ -16,22 +16,30 @@ namespace Assessment.Data.Model
     {
         public ShoppingCard()
         {
-            Entries = new ObservableCollection<ShoppingCardEntry>();
-            Entries.CollectionChanged += Entries_CollectionChanged;
+            Entries = new List<ShoppingCardEntry>();
         }
 
         public int Id { get; set; }
         public string UserId { get; set; }
-        public ObservableCollection<ShoppingCardEntry> Entries { get; set; }
-        public double TotalPrice { get; set; }
+        public ICollection<ShoppingCardEntry> Entries { get; set; }
         public ShoppingCardStatusEnum Status { get; set; } = ShoppingCardStatusEnum.Active;
 
         [NotMapped]
         public bool IsActive => Status == ShoppingCardStatusEnum.Active;
 
+        [NotMapped]
+        public double TotalPrice => Entries.Sum(entry => entry.TotalPrice);
+
         public void AddEntry(ShoppingCardEntry entry)
         {
-            Entries.Add(entry);
+            var alreadyExists = Entries.FirstOrDefault(e => e.ProductId == entry.ProductId);
+            if (alreadyExists == null)
+            {
+                Entries.Add(entry);
+                return;
+            }
+
+            alreadyExists.Count += entry.Count;
         }
 
         public void RemoveEntry(ShoppingCardEntry entry)
@@ -44,15 +52,6 @@ namespace Assessment.Data.Model
             var entry = Entries.FirstOrDefault(a => a.Id == entryId)
                 ?? throw new EntryNotFoundException($"No entry found in the card by id: {entryId}");
             Entries.Remove(entry);
-        }
-
-        private void Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            TotalPrice = 0;
-            for (int i = 0; i < Entries.Count; i++)
-            {
-                TotalPrice += Entries[i].TotalPrice;
-            }
         }
 
         internal void CheckOut()

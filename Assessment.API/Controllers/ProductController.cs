@@ -31,6 +31,17 @@ namespace Assessment.API.Controllers
         }
 
         [HttpGet]
+        [Route(nameof(Filter))]
+        public async Task<IActionResult> Filter(string filter)
+        {
+            var products = await repository.GetAllFilterdAsync(filter);
+            if (products == null || products.Count() == 0)
+                return NotFound("No product could be found");
+
+            return Ok(products);
+        }
+
+        [HttpGet]
         [Route("Pagination")]
         public async Task<IActionResult> GetPaginated(int page, int perPage)
         {

@@ -17,5 +17,6 @@ namespace Assessment.Data.Interfaces
         void Add(Product product);
         void Update(Product product);
         void Remove(int id);
+        Task<IEnumerable<Product>> GetAllFilterdAsync(string filter);
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Assessment.Data.Services
@@ -38,6 +39,12 @@ namespace Assessment.Data.Services
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await this.db.Products.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetAllFilterdAsync(string filter)
+        {
+            return await this.db.Products.AsNoTracking()
+                .Where(product => Regex.IsMatch(product.Name, $@"[\s\S]*{filter}[\s\S]*")).ToListAsync();
         }
 
         public async Task<Product> GetAsync(int id)
