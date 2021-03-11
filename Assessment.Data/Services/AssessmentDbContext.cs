@@ -13,11 +13,17 @@ namespace Assessment.Data.Services
     {
         public AssessmentDbContext(DbContextOptions<AssessmentDbContext> option) : base(option)
         {
+            
         }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<ShoppingCard> ShoppingCards { get; set; }
         public DbSet<UserShoppingCardStorage> UserShoppingCardStorages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

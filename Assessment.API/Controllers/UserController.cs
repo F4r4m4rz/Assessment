@@ -31,13 +31,13 @@ namespace Assessment.API.Controllers
             this.configuration = configuration;
 
             // Statically add an admin account upon run just for demonstration purposes
-            StaticallyAddUser(UserRole.Admin);
+            StaticallyAddUser(UserRole.Admin).Wait();
 
             // Statically add a customer account upon run just for demonstration purposes
-            StaticallyAddUser(UserRole.Costumer);
+            StaticallyAddUser(UserRole.Costumer).Wait(); ;
         }
 
-        private void StaticallyAddUser(string role)
+        private async Task StaticallyAddUser(string role)
         {
             var admin = userManager.FindByEmailAsync($"{role}@assessment.no").Result;
             if (admin == null)
@@ -49,11 +49,11 @@ namespace Assessment.API.Controllers
                     UserName = $"{role}@assessment.no",
                     Id = role
                 };
-                var result = userManager.CreateAsync(user, $"{role}1234!").Result;
+                var result = await userManager.CreateAsync(user, $"{role}1234!");
 
                 // add role
                 if (!roleManager.RoleExistsAsync(role).Result)
-                    roleManager.CreateAsync(new IdentityRole(role));
+                    await roleManager.CreateAsync(new IdentityRole(role));
 
                 var temp = userManager.AddToRoleAsync(user, role).Result;
             }

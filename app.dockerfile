@@ -1,7 +1,7 @@
 ﻿
 FROM  mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 ARG BUILD_CONFIG=Debug
-ARG BUILDER_VERSION=0.0.1
+ARG BUILDER_VERSION=0.0.2
 LABEL maintainer=me@iamfara.com \
     Name=assessment-build-${BUILD_CONFIG} \
     Version=${BUILDER_VERSION}

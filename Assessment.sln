@@ -9,8 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment.API", "Assessmen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{B29F4AD3-323F-457B-BDD6-A8AF85E46716}"
 	ProjectSection(SolutionItems) = preProject
-		Docker\app.dockerfile = Docker\app.dockerfile
-		Docker\docker-compose.yml = Docker\docker-compose.yml
+		app.dockerfile = app.dockerfile
+		build.dockerfile = build.dockerfile
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Global

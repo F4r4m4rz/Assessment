@@ -36,9 +36,13 @@ namespace Assessment.API
             services.AddControllers();
 
             // Add DbContext
+            services.AddCors();
             services.AddDbContext<AssessmentDbContext>(builder =>
             {
-                builder.UseInMemoryDatabase("Students");
+                builder.UseMySql(Configuration["ConnectionStrings:AssessmentDbContext"], opt => 
+                {
+                    opt.CommandTimeout(300);
+                });
             });
 
             #region Add repositories
@@ -88,12 +92,14 @@ namespace Assessment.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AssessmentDbContext db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            db.Database.Migrate();
 
             app.UseHttpsRedirection();
 
