@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment.Data", "Assessment.Data\Assessment.Data.csproj", "{C82162ED-2D6C-475F-9945-71A050D7033C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment.Data", "Assessment.Data\Assessment.Data.csproj", "{C82162ED-2D6C-475F-9945-71A050D7033C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assessment.API", "Assessment.API\Assessment.API.csproj", "{A371AAA1-1A71-4C17-AF4D-FE0CE6BD06C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assessment.API", "Assessment.API\Assessment.API.csproj", "{A371AAA1-1A71-4C17-AF4D-FE0CE6BD06C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{B29F4AD3-323F-457B-BDD6-A8AF85E46716}"
+	ProjectSection(SolutionItems) = preProject
+		Docker\app.dockerfile = Docker\app.dockerfile
+		Docker\docker-compose.yml = Docker\docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
