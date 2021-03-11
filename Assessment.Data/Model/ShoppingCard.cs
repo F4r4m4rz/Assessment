@@ -20,24 +20,11 @@ namespace Assessment.Data.Model
             Entries.CollectionChanged += Entries_CollectionChanged;
         }
 
-        public ShoppingCard(string userId) : this()
-        {
-            UserId = userId;
-        }
-
-        public ShoppingCard(User user) : this(user?.Id ?? throw new ArgumentNullException(nameof(user)))
-        {
-            User = user;
-        }
-
         public int Id { get; set; }
-
-        [ForeignKey(nameof(User))]
         public string UserId { get; set; }
         public ObservableCollection<ShoppingCardEntry> Entries { get; set; }
         public double TotalPrice { get; set; }
         public ShoppingCardStatusEnum Status { get; set; } = ShoppingCardStatusEnum.Active;
-        public User User { get; set; }
 
         [NotMapped]
         public bool IsActive => Status == ShoppingCardStatusEnum.Active;
@@ -68,10 +55,9 @@ namespace Assessment.Data.Model
             }
         }
 
-        internal ShoppingCard CheckOut()
+        internal void CheckOut()
         {
             Status = ShoppingCardStatusEnum.Closed;
-            return this;
         }
     }
 }

@@ -54,14 +54,14 @@ namespace Assessment.API
                                               typeof(ShoppingCardRepository),
                                               ServiceLifetime.Scoped));
 
-            services.Add(new ServiceDescriptor(typeof(IUserRepository),
-                                              typeof(UserRepository),
+            services.Add(new ServiceDescriptor(typeof(IUserShoppingCardStorageRepository),
+                                              typeof(UserShoppingCardStorageRepository),
                                               ServiceLifetime.Scoped));
             #endregion
 
             #region Identity & Authentication
             
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AssessmentDbContext>()
                 .AddDefaultTokenProviders();
 

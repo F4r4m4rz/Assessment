@@ -18,9 +18,9 @@ namespace Assessment.API.Controllers
     public class ShoppingCardController : ControllerBase
     {
         private readonly IShoppingCardRepository repository;
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public ShoppingCardController(IShoppingCardRepository repository, UserManager<User> userManager)
+        public ShoppingCardController(IShoppingCardRepository repository, UserManager<IdentityUser> userManager)
         {
             this.repository = repository;
             this.userManager = userManager;

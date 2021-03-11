@@ -18,5 +18,6 @@ namespace Assessment.Data.Services
         public DbSet<Product> Products { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<ShoppingCard> ShoppingCards { get; set; }
+        public DbSet<UserShoppingCardStorage> UserShoppingCardStorages { get; set; }
     }
 }

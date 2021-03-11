@@ -20,11 +20,11 @@ namespace Assessment.API.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<IdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration configuration;
 
-        public UserController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public UserController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -42,7 +42,7 @@ namespace Assessment.API.Controllers
             var admin = userManager.FindByEmailAsync($"{role}@assessment.no").Result;
             if (admin == null)
             {
-                User user = new User()
+                IdentityUser user = new IdentityUser()
                 {
                     Email = $"{role}@assessment.no",
                     SecurityStamp = Guid.NewGuid().ToString(),
@@ -67,7 +67,7 @@ namespace Assessment.API.Controllers
             if (userExists != null)
                 return BadRequest("User name taken!");
 
-            User user = new User()
+            IdentityUser user = new IdentityUser()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
