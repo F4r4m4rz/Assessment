@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Assessment.API.Controllers
 {
     [ApiController]
-    [Authorize(Roles = UserRole.Costumer + "," + UserRole.Admin)]
+    [Authorize(Roles = UserRole.Customer + "," + UserRole.Admin)]
     [Route("api/[controller]")]
     public class ShoppingCardController : ControllerBase
     {

@@ -34,7 +34,7 @@ namespace Assessment.API.Controllers
             StaticallyAddUser(UserRole.Admin).Wait();
 
             // Statically add a customer account upon run just for demonstration purposes
-            StaticallyAddUser(UserRole.Costumer).Wait(); ;
+            StaticallyAddUser(UserRole.Customer).Wait(); ;
         }
 
         private async Task StaticallyAddUser(string role)

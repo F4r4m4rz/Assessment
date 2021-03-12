@@ -7,6 +7,6 @@ namespace Assessment.Data.Model
     public class UserRole
     {
         public const string Admin = "Admin";
-        public const string Costumer = "Costumer";
+        public const string Customer = "Customer";
     }
 }
