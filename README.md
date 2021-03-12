@@ -25,7 +25,6 @@ Password: Customer1234!
 ### User
 
 * Register: `POST /api/user/register`
-
 **Body example**
 ```json
 {
@@ -34,7 +33,6 @@ Password: Customer1234!
 }
 ```
 * Login: `POST /api/user/login`
-
 **Body example**
 ```json
 {
@@ -57,7 +55,6 @@ Password: Customer1234!
 **URL Parameter** : `id=[integer]`
 
 * Add new: `POST /api/product`
-
 **Body example**
 ```json
 {
@@ -73,7 +70,6 @@ This requrest needs admin autorization. to test, login with admin account.
 This requrest needs admin autorization. to test, login with admin account.
 
 * Update: `PUT /api/product`
-
 **Body example**
 ```json
 {
@@ -93,7 +89,6 @@ This requrest needs admin autorization. to test, login with admin account.
 * Get all: `GET /api/news/getall`
 
 * Add new: `POST /api/news`
-
 **Body example**
 ```json
 {
@@ -106,7 +101,6 @@ This requrest needs admin autorization. to test, login with admin account.
 ### Shopping card
 
 * Add item to shopping card: `POST /api/shoppingcard/add`
-
 **Body example**
 ```json
 {
