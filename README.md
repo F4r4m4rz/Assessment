@@ -28,7 +28,7 @@ Password: Customer1234!
 **Body example**
 ```json
 {
-    "Email": username@domain.no,
+    "Email": "username@domain.no",
     "Passsword": "some password"
 }
 ```
@@ -36,7 +36,7 @@ Password: Customer1234!
 **Body example**
 ```json
 {
-    "Email": username@domain.no,
+    "Email": "username@domain.no",
     "Passsword": "some password"
 }
 ```
